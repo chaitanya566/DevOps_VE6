@@ -15,6 +15,9 @@ public class DemoApplication {
     @Bean
     public CommandLineRunner run() {
         return args -> {
+		// in DemoApplication.java or any controller
+		System.out.println("New build triggered at: " + System.currentTimeMillis());
+
             System.out.println("The application has started successfully! (Custom Message)");
         };
     }
