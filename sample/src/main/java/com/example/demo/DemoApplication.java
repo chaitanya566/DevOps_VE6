@@ -17,7 +17,7 @@ public class DemoApplication {
         return args -> {
 		// in DemoApplication.java or any controller
 		System.out.println("New build triggered at: " + System.currentTimeMillis());
-		System.out.println("hello");
+		System.out.println("hello world");
 
             System.out.println("The application has started successfully! (Custom Message)");
         };
