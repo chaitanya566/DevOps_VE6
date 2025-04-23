@@ -1,24 +1,24 @@
-# Use an official Maven 3.9.6 image with OpenJDK 17 to build the application
-FROM maven:3.9.6-openjdk-17-slim AS build
+# Build stage using Maven 3.9.6 and OpenJDK 17
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the pom.xml and the source code into the container
+# Copy pom.xml and source
 COPY pom.xml .
 COPY src ./src
 
-# Build the application (this will create a .jar file)
+# Build application
 RUN mvn clean package -DskipTests
 
-# Use a smaller openjdk 17 image for running the app
-FROM openjdk:17-jre-slim
+# Runtime stage using OpenJDK 17 JRE (lightweight)
+FROM eclipse-temurin:17-jre-jammy
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy the built .jar file from the build image
+# Copy JAR from build stage
 COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar demo.jar
 
-# Set the command to run the Java application
+# Run the JAR
 ENTRYPOINT ["java", "-jar", "demo.jar"]
